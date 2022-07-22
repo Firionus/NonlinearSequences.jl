@@ -3,5 +3,9 @@ uuid = "a82549a6-b563-434f-85e1-c4d16460aa1a"
 authors = ["Johannes Fried <jcmf.schule@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+NonuniformResampling1D = "c4305623-a722-4113-be18-d86c1ca1c729"
+
 [compat]
 julia = "1.6"
+NonuniformResampling1D = "0.2.0"
