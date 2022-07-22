@@ -1,0 +1,7 @@
+name = "NonuniformSmoothing1D"
+uuid = "a82549a6-b563-434f-85e1-c4d16460aa1a"
+authors = ["Johannes Fried <jcmf.schule@gmail.com> and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
