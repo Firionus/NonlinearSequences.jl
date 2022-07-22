@@ -63,21 +63,62 @@ using Aqua
 
         @testset "logspace with stop, step, base and length" begin
             # logspace(; stop, step, base, length)
-            error("TODO")
+            y = logspace(stop=2, step=1/2, base=2, length=3)
+            @test y[1] == 1
+            @test y[2] == 2^.5
+            @test y[end] == 2
         end
 
         @testset "logspace errors with inappropriate arguments" begin
-            # logspace(; start, stop, step, base, length) # warning ignore step and base
-            # logspace(; start, stop, step, length) # warning ignore step
-            # logspace(; start, stop, base, length) # warning ignore base
-            # logspace(; start, stop, base)
-            # logspace(; start, stop, step)
-            # logspace(; start, base)
-            # logspace(; start)
-            # logspace(; start, stop)
+            # length is dominant
+            @test_logs (:warn, "step, base and adjust_step are ignored when length is given"
+                ) logspace(start=1, stop=2, step=1/2, base=2, length=3)
+            @test_logs (:warn, "step, base and adjust_step are ignored when length is given"
+                ) logspace(start=1, stop=2, step=1/2, length=3)
+            @test_logs (:warn, "step, base and adjust_step are ignored when length is given"
+                ) logspace(start=1, stop=2, base=2, length=3)
+            @test_logs (:warn, "step, base and adjust_step are ignored when length is given"
+                ) logspace(start=1, stop=2, length=3, adjust_step=true)
 
-            # what if stop <= start?
-            error("TODO")
+            @test_throws ArgumentError logspace(start=1, stop=2, step=1/2)
+            @test_throws ArgumentError logspace(start=1, stop=2, base=2)
+
+            @test_throws ArgumentError logspace(1, adjust_step=true)
+            @test_throws ArgumentError logspace(start=1, adjust_step=true)
+
+            @test_throws ArgumentError logspace(start=1, base=2, adjust_step=true)
+            @test_throws ArgumentError logspace(start=1, base=2)
+            @test_throws ArgumentError logspace(1, base=2)
+            @test_throws ArgumentError logspace(start=1, step=1/2, adjust_step=true)
+            @test_throws ArgumentError logspace(start=1, step=1/2)
+            @test_throws ArgumentError logspace(1, step=1/2)
+
+            @test_throws ArgumentError logspace(start=1)
+            @test_throws ArgumentError logspace(1)
+
+            @test_throws ArgumentError logspace(stop=1)
+            @test_throws ArgumentError logspace(length=1)
+            @test_throws ArgumentError logspace(step=1)
+            @test_throws ArgumentError logspace(base=1)
+            @test_throws ArgumentError logspace(adjust_step=true)
+
+            @test_throws ArgumentError logspace(base=2, step=1/2)
+
+            @test_throws ArgumentError logspace(1, length=2)
+            @test_throws ArgumentError logspace(1, adjust_step=true)
+
+            @test_throws ArgumentError logspace(1,2)
+            @test_throws ArgumentError logspace(start=1, stop=2)
+
+            @test_throws ArgumentError logspace(1,2, adjust_step=true)
+
+            @test_throws ArgumentError logspace(start = 1, base = 2)
+
+            @test_throws ArgumentError logspace(adjust_step=3, step=1/2, start=3, base=4)
+
+            @test_throws ArgumentError logspace(adjust_step=nothing)
+
+            # TODO what if stop <= start?
         end
 
         # TODO enable later
