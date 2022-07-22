@@ -4,4 +4,4 @@ authors = ["Johannes Fried <jcmf.schule@gmail.com> and contributors"]
 version = "0.1.0"
 
 [compat]
-julia = "1"
+julia = "1.6"
