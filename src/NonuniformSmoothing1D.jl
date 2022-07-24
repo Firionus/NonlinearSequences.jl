@@ -5,7 +5,71 @@ using NonuniformResampling1D
 export logspace
 
 """
-TODO Docs go here
+    logspace(start, stop, length)
+    logspace(start, stop; length, step, base, adjust_step)
+    logspace(start; stop, length, step, base, adjust_step)
+    logspace(; start, stop, length, step, base, adjust_step)
+
+Returns an array of logarithmically spaced values. 
+
+All arguments can be provided as keyword arguments. Additionally, `start`,
+`stop` and `length` can be provided as positional arguments. 
+
+4 different combinations of arguments are valid:
+- `start`, `stop` and `length`: `length` many values from `start` to `stop`.
+- `start`, `stop`, `step` and `base`: values from `start` up to `stop` whose
+  logarithms of base `base` are spaced linearly with `step`. By default, the
+  step size is obeyed and values may end before `stop`. To adjust the step to
+  reach `stop` precisely, set `adjust_step=true`.
+- `start`, `step`, `base`, `length`: `length` many values starting at `start`
+  whose logarithms of base `base` are spaced linearly with `step`.
+- `stop`, `step`, `base`, `length`: `length` many values ending at `stop` whose
+  logarithms of base `base` are spaced linearly with `step`.
+
+# Examples
+```jldoctest
+julia> logspace(1, 2, 3)
+3-element Vector{Float64}:
+ 1.0
+ 1.414213562373095
+ 2.0
+
+julia> logspace(1, 2.1, step=1/2, base=2)
+3-element Vector{Float64}:
+ 1.0
+ 1.414213562373095
+ 2.0
+
+julia> logspace(1, 2.1, step=1/2, base=2, adjust_step=true)
+3-element Vector{Float64}:
+ 1.0
+ 1.449137674618944
+ 2.1
+
+julia> logspace(1, step=1/2, base=2, length=3)
+3-element Vector{Float64}:
+ 1.0
+ 1.414213562373095
+ 2.0
+
+julia> logspace(stop=2, step=1/2, base=2, length=3)
+3-element Vector{Float64}:
+ 1.0
+ 1.414213562373095
+ 2.0
+
+julia> logspace(start=1, stop=2, length=3)
+3-element Vector{Float64}:
+ 1.0
+ 1.414213562373095
+ 2.0
+
+julia> logspace(stop=1, step=-1/2, base=2, length=3)
+3-element Vector{Float64}:
+ 2.0
+ 1.414213562373095
+ 1.0
+```
 """
 function logspace end
 
