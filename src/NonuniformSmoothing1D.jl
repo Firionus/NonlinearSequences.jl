@@ -17,10 +17,14 @@ function logspace(start, stop, length)
 end
 
 # 2 positional arguments
-logspace(start, stop; kwargs...) = logspace(start=start, stop=stop; kwargs...)
+logspace(start, stop; length=nothing, step=nothing, base=nothing, 
+adjust_step=nothing) = logspace(start=start, stop=stop, length=length, 
+step=step, base=base, adjust_step=adjust_step)
 
 # 1 positional argument
-logspace(start; kwargs...) = logspace(start=start; kwargs...)
+logspace(start; stop=nothing, length=nothing, step=nothing, base=nothing, 
+adjust_step=nothing) = logspace(start=start, stop=stop, length=length, 
+step=step, base=base, adjust_step=adjust_step)
 
 # 0 positional arguments
 function logspace(; start=nothing, stop=nothing, length=nothing, step=nothing, 

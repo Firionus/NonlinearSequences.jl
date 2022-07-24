@@ -130,28 +130,19 @@ using Aqua
 
             @test_throws ArgumentError logspace(adjust_step=nothing)
 
-            logspace(stop=2, length=3, step=1/2, base=2, adjust_step=true)
-
             # TODO what if stop <= start?
 
             
-            # TODO lay out how this should react
             # define positional parameter again in kwargs 
-            @test_skip @test_throws Exception logspace(1, 2, length=3, start=.5)
+            @test_throws MethodError logspace(1, 2, length=3, start=.5)
+            @test_throws MethodError logspace(1, stop=2, length=3, start=.5)
+
+            # invalid kwarg
+            @test_throws MethodError logspace(start=1, stop=2, length=3, unknown_kwarg=1)
+            @test_throws MethodError logspace(1, stop=2, length=3, unknown_kwarg=1)
+            @test_throws MethodError logspace(1, 2, length=3, unknown_kwarg=1)
             
         end
-
-        # TODO make these go away
-        #=
-julia> detect_ambiguities(NonuniformSmoothing1D)
-6-element Vector{Tuple{Method, Method}}:
- (_logspace(start, stop, length, step::Nothing, base::Nothing, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:34, _logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41)
- (_logspace(start, stop::Nothing, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:39, _logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41)
- (_logspace(start, stop, length::Nothing, step, base, adjust_step) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:37, _logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41)
- (_logspace(start, stop::Nothing, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:39, _logspace(start::Nothing, stop::Nothing, length, step, base, adjust_step) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:78)
- (_logspace(start, stop, length::Nothing, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:36, _logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41)
- (_logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41, _logspace(start::Nothing, stop::Nothing, length, step, base, adjust_step) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:78)
-        =#
 
         # TODO enable later
 
@@ -198,12 +189,9 @@ julia> detect_ambiguities(NonuniformSmoothing1D)
         =#
     end
 
-    # TODO enable later
-    #=
     @testset "Aqua.jl" begin
         Aqua.test_all(NonuniformSmoothing1D)
     end
-    =#
 
     # TODO: performance problems
     #=
