@@ -72,26 +72,29 @@ function _logspace_start_stop_step(start, stop, step, base, adjust_step)
     isnothing(step) && throw(ArgumentError("keyword argument step must be defined"))
     isnothing(base) && throw(ArgumentError("keyword argument base must be defined"))
 
-    logstart = log(base, start)
-    logstop = log(base, stop)
+    logstart = log(start)
+    logstop = log(stop)
 
     if adjust_step
         logsize = log(base, stop/start)
         length = (logsize/step + 1)|>floor|>Int
-        base.^range(logstart, logstop, length=length)
+        exp.(range(logstart, logstop, length=length))
     else
-        base.^range(logstart, logstop, step=step)
+        logstep = log(base)*step
+        exp.(range(logstart, logstop, step=logstep))
     end
 end
 
 function _logspace_start_len_step(start, length, step, base)
-    logstart = log(base, start)
-    base.^range(logstart, length=length, step=step)
+    logstart = log(start)
+    logstep = log(base)*step
+    exp.(range(logstart, length=length, step=logstep))
 end
 
 function _logspace_stop_len_step(stop, length, step, base)
-    logstop = log(base, stop)
-    base.^range(stop=logstop, length=length, step=step)
+    logstop = log(stop)
+    logstep = log(base)*step
+    exp.(range(stop=logstop, length=length, step=logstep))
 end
 
 function powspace()
