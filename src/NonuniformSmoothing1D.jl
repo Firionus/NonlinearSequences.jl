@@ -78,9 +78,16 @@ _logspace(start::Nothing, stop::Nothing, length::Nothing, step, base, adjust_ste
 _logspace(start::Nothing, stop::Nothing, length, step, base, adjust_step) = throw(
     ArgumentError("either start or stop must be provided")
 )
+_logspace(start::Nothing, stop, length, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
+    ArgumentError("provide start or step and base")
+)
 _logspace(start::Nothing, stop::Nothing, length::Nothing, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
     ArgumentError("all arguments are nothing")
 )
+_logspace(start::Nothing, stop, length, step, base, adjust_step) = begin
+    @warn "step, base and adjust_step are ignored when length is given"
+    _logspace_stop_len_step(stop, length, step, base)
+end
 _logspace(start, stop, length, step, base, adjust_step) = begin
     @warn "step, base and adjust_step are ignored when length is given"
     logspace(start, stop, length)
@@ -117,5 +124,7 @@ function powspace()
 end
 
 # TODO: re-export stuff from NonuniformSmoothing1D
+
+# TODO move logspace and powspace to their own files
 
 end

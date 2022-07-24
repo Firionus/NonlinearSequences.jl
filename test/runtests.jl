@@ -118,8 +118,26 @@ using Aqua
 
             @test_throws ArgumentError logspace(adjust_step=nothing)
 
+            logspace(stop=2, length=3, step=1/2, base=2, adjust_step=true)
+
             # TODO what if stop <= start?
         end
+
+        @testset "No method method ambiguities" begin
+            @test detect_ambiguities(NonuniformSmoothing1D)|>isempty
+        end
+
+        # TODO make these go away
+        #=
+julia> detect_ambiguities(NonuniformSmoothing1D)
+6-element Vector{Tuple{Method, Method}}:
+ (_logspace(start, stop, length, step::Nothing, base::Nothing, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:34, _logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41)
+ (_logspace(start, stop::Nothing, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:39, _logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41)
+ (_logspace(start, stop, length::Nothing, step, base, adjust_step) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:37, _logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41)
+ (_logspace(start, stop::Nothing, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:39, _logspace(start::Nothing, stop::Nothing, length, step, base, adjust_step) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:78)
+ (_logspace(start, stop, length::Nothing, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:36, _logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41)
+ (_logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:41, _logspace(start::Nothing, stop::Nothing, length, step, base, adjust_step) in NonuniformSmoothing1D at /home/johannes/.julia/dev/NonuniformSmoothing1D/src/NonuniformSmoothing1D.jl:78)
+        =#
 
         # TODO enable later
 
@@ -172,4 +190,69 @@ using Aqua
         Aqua.test_all(NonuniformSmoothing1D)
     end
     =#
+
+    # TODO: performance problems
+    #=
+    julia> @benchmark logspace(1, 2, step=1/100, base=2)
+BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (min … max):   9.363 μs … 47.548 μs  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     10.126 μs              ┊ GC (median):    0.00%
+ Time  (mean ± σ):   11.219 μs ±  2.564 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▄█▇▅▃▄▅▅▄▃▂▃▃▃▃▄▂▂▃▁▁▂▂▃▁                                   ▂
+  ███████████████████████████▇████▇▇▆▆▅▅▄▆▆▇▆▆▇▆▆▇▆▅▆▆▆▄▄▄▄▂▅ █
+  9.36 μs      Histogram: log(frequency) by time      21.4 μs <
+
+ Memory estimate: 896 bytes, allocs estimate: 1.
+
+julia> @benchmark logspace(1, length=100, step=1/100, base=2)
+BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (min … max):   9.302 μs … 46.089 μs  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     10.175 μs              ┊ GC (median):    0.00%
+ Time  (mean ± σ):   11.142 μs ±  2.499 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▄█▆▅▄▃▅▅▄▄▂▂▁▃▄▃▃▂▃▁▁▃▁▁▂▁                                  ▂
+  █████████████████████████████▇█▇█▇██▇▇▆▇▆▇▆▆▆▆▄▅▅▄▅▄▅▆▃▃▄▄▄ █
+  9.3 μs       Histogram: log(frequency) by time      21.1 μs <
+
+ Memory estimate: 896 bytes, allocs estimate: 1.
+
+julia> @benchmark logspace(1, 2, 100)
+BenchmarkTools.Trial: 10000 samples with 10 evaluations.
+ Range (min … max):  1.291 μs … 229.770 μs  ┊ GC (min … max): 0.00% … 98.99%
+ Time  (median):     1.524 μs               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   1.715 μs ±   2.574 μs  ┊ GC (mean ± σ):  1.94% ±  1.40%
+
+  ▇█▄▂▅▆▅▅▄▄▂▃▂▂▂▃▂▂▂▁▁▁                                      ▂
+  ████████████████████████████▇▇▇▇▇▇█▇▇▇▇▇▆▇▇▇▇▆▆▅▅▅▅▄▄▄▅▅▅▄▅ █
+  1.29 μs      Histogram: log(frequency) by time      4.25 μs <
+
+ Memory estimate: 896 bytes, allocs estimate: 1.
+=#
+
+#=
+julia> @benchmark exp.(range(log(1), log(2), step=1/1000))
+BenchmarkTools.Trial: 10000 samples with 6 evaluations.
+ Range (min … max):  5.345 μs … 329.654 μs  ┊ GC (min … max): 0.00% … 80.26%
+ Time  (median):     5.647 μs               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   6.513 μs ±   7.458 μs  ┊ GC (mean ± σ):  2.49% ±  2.20%
+
+  ██▆▃▁▃▃▄▄▇▄▄▁ ▁▁                                            ▂
+  █████████████▇███▇▅▇▅▆▅▄▅▄▅▄▄▄▅▇▅▇▆▆▇▆▇▆▅▅▄▆▆▇▇▆▇▇▇▆▇▆▆▄▅▇▅ █
+  5.35 μs      Histogram: log(frequency) by time      14.2 μs <
+
+ Memory estimate: 5.56 KiB, allocs estimate: 1.
+
+julia> @benchmark 2 .^range(log(2,1), log(2,2), step=1/1000)
+BenchmarkTools.Trial: 10000 samples with 1 evaluation.
+ Range (min … max):   9.927 μs … 475.411 μs  ┊ GC (min … max): 0.00% … 0.00%
+ Time  (median):     10.767 μs               ┊ GC (median):    0.00%
+ Time  (mean ± σ):   11.566 μs ±   5.633 μs  ┊ GC (mean ± σ):  0.00% ± 0.00%
+
+  ▄█▆▅▅▃▅▄▃▅▃ ▁  ▃▃  ▁ ▁▄▃ ▁▃▁ ▅▆▅▂▃▅▅▂▁▂▁   ▂    ▂    ▂     ▁ ▂
+  ██████████████▇██▇██████████▇███████████▇▃▆█▇▆▁██▇▆▁▅██▆▄▁▇█ █
+  9.93 μs       Histogram: log(frequency) by time      15.4 μs <
+
+ Memory estimate: 8.00 KiB, allocs estimate: 1.
+=#
 end
