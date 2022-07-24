@@ -70,7 +70,6 @@ using Aqua
         end
 
         @testset "logspace errors with inappropriate arguments" begin
-            
             @test_logs (:warn, "step and base are ignored when start, stop and length are given") (
                 # length is dominant over step/base
                 @test all(logspace(start=1, stop=2, step=1/100, base=2, length=3) .≈ [1, 2^.5, 2])
@@ -129,10 +128,7 @@ using Aqua
             @test_throws ArgumentError logspace(adjust_step=3, step=1/2, start=3, base=4)
 
             @test_throws ArgumentError logspace(adjust_step=nothing)
-
-            # TODO what if stop <= start?
-
-            
+           
             # define positional parameter again in kwargs 
             @test_throws MethodError logspace(1, 2, length=3, start=.5)
             @test_throws MethodError logspace(1, stop=2, length=3, start=.5)
@@ -144,10 +140,15 @@ using Aqua
             
         end
 
+        @testset "logspace also produces decreasing values" begin
+            @test all(logspace(2, 1, 3) .≈ [2, 2^.5, 1])
+            @test all(logspace(2, 1, step=-1/2, base=2) .≈ [2, 2^.5, 1])
+            @test all(logspace(2, length=3, step=-1/2, base=2) .≈ [2, 2^.5, 1])
+            @test all(logspace(stop=1, length=3, step=-1/2, base=2) .≈ [2, 2^.5, 1])
+        end
+
         # TODO enable later
-
         #=
-
         # TODO add octspace and decspace tests like for logspace
 
         @testset "octspace with points_per_octave=2" begin
