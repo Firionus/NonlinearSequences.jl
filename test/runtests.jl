@@ -201,7 +201,5 @@ using Aqua
             logspace(1, length=101, step=1/100, base=2) .≈
             logspace(stop=2, length=101, step=1/100, base=2)
         )
-        # TODO
-        # options without start and step are about 30 % slower
     end
 end
