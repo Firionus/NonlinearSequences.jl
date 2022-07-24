@@ -24,25 +24,32 @@ logspace(start; kwargs...) = logspace(start=start; kwargs...)
 
 # 0 positional arguments
 function logspace(; start=nothing, stop=nothing, length=nothing, step=nothing, 
-    base=nothing, adjust_step=false)
+    base=nothing, adjust_step=nothing)
 
     if start !== nothing
         if stop !== nothing
             if length !== nothing
                 if !(step|>isnothing && base|>isnothing)
-                    @warn "step and base are ignored when length is given"
+                    @warn "step and base are ignored when start, stop and length are given"
+                end
+                if adjust_step !== nothing
+                    @warn "adjust_step is ignored when length is given"
                 end
                 logspace(start, stop, length)
             else # length === nothing
                 if step|>isnothing || base|>isnothing
                     throw(ArgumentError("provide step and base"))
                 end
+                adjust_step = adjust_step|>isnothing ? false : adjust_step
                 _logspace_start_stop_step(start, stop, step, base, adjust_step)
             end
         else # stop === nothing
             if length !== nothing
                 if step|>isnothing || base|>isnothing
                     throw(ArgumentError("provide step and base"))
+                end
+                if adjust_step !== nothing
+                    @warn "adjust_step is ignored when length is given"
                 end
                 _logspace_start_len_step(start, length, step, base)
             else # length === nothing
@@ -52,6 +59,9 @@ function logspace(; start=nothing, stop=nothing, length=nothing, step=nothing,
     else # start === nothing
         if stop|>isnothing || length|>isnothing || step|>isnothing || base|>isnothing
             throw(ArgumentError("either provide start or all of stop, length, step and base"))
+        end
+        if adjust_step !== nothing
+            @warn "adjust_step is ignored when length is given"
         end
         _logspace_stop_len_step(stop, length, step, base)
     end

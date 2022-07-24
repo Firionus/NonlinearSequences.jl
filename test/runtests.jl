@@ -82,8 +82,8 @@ using Aqua
             @test_logs (:warn, "adjust_step is ignored when length is given"
                 ) logspace(start=1, stop=2, length=3, adjust_step=true)
             @test_logs (
-                :warn, "adjust_step is ignored when length is given") (
-                :warn, "step and base are ignored when start, stop and length are given"
+                :warn, "step and base are ignored when start, stop and length are given") (
+                :warn, "adjust_step is ignored when length is given"
                 ) logspace(start=1, stop=2, step=1/2, base=2, length=3, adjust_step=true)
 
             @test_logs (:warn, "adjust_step is ignored when length is given"
