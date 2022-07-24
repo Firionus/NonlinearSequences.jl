@@ -25,32 +25,23 @@ logspace(start; kwargs...) = logspace(start=start; kwargs...)
 # 0 positional arguments
 function logspace(; start=nothing, stop=nothing, length=nothing, step=nothing, 
     base=nothing, adjust_step=nothing)
-
     if start !== nothing
         if stop !== nothing
             if length !== nothing
                 if !(step|>isnothing && base|>isnothing)
                     @warn "step and base are ignored when start, stop and length are given"
                 end
-                if adjust_step !== nothing
-                    @warn "adjust_step is ignored when length is given"
-                end
+                warn_adjust_step(adjust_step)
                 logspace(start, stop, length)
             else # length === nothing
-                if step|>isnothing || base|>isnothing
-                    throw(ArgumentError("provide step and base"))
-                end
+                ensure_step_base(step, base)
                 adjust_step = adjust_step|>isnothing ? false : adjust_step
                 _logspace_start_stop_step(start, stop, step, base, adjust_step)
             end
         else # stop === nothing
             if length !== nothing
-                if step|>isnothing || base|>isnothing
-                    throw(ArgumentError("provide step and base"))
-                end
-                if adjust_step !== nothing
-                    @warn "adjust_step is ignored when length is given"
-                end
+                ensure_step_base(step, base)
+                warn_adjust_step(adjust_step)
                 _logspace_start_len_step(start, length, step, base)
             else # length === nothing
                 throw(ArgumentError("provide length or step and base"))
@@ -60,11 +51,17 @@ function logspace(; start=nothing, stop=nothing, length=nothing, step=nothing,
         if stop|>isnothing || length|>isnothing || step|>isnothing || base|>isnothing
             throw(ArgumentError("either provide start or all of stop, length, step and base"))
         end
-        if adjust_step !== nothing
-            @warn "adjust_step is ignored when length is given"
-        end
+        warn_adjust_step(adjust_step)
         _logspace_stop_len_step(stop, length, step, base)
     end
+end
+
+warn_adjust_step(adjust_step) = if adjust_step !== nothing
+    @warn "adjust_step is ignored when length is given"
+end
+
+ensure_step_base(step, base) = if step|>isnothing || base|>isnothing
+    throw(ArgumentError("provide step and base"))
 end
 
 function _logspace_start_stop_step(start, stop, step, base, adjust_step)
