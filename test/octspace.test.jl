@@ -17,13 +17,14 @@
 
     # Additional APIs with start or stop missing
     # octspace(start; length, step)
+    @test octspace(20, length=300, step=1/24) == 
+        logspace(20, length=300, step=1/24, base=2)
     # octspace(; start, length, step)
+    @test octspace(start=20, length=300, step=1/24) == 
+        logspace(20, length=300, step=1/24, base=2)
     # octspace(; stop, length, step)
-
-    # Questionable future APIs
-    # octspace(start; octaves, step)
-    # octspace(; start, octaves, step)
-    # octspace(; stop, octaves, step)
+    @test octspace(stop=20e3, length=300, step=1/24) == 
+        logspace(stop=20e3, length=300, step=1/24, base=2)
 
     # TODO
     # test whether warnings and errors are useful for octspace
