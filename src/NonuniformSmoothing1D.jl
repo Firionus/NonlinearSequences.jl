@@ -17,80 +17,44 @@ function logspace(start, stop, length)
 end
 
 # 2 positional arguments
-logspace(start, stop; length=nothing, step=nothing, base=nothing, 
-    adjust_step=nothing) = _logspace(start, stop, length, step, base, adjust_step)
+logspace(start, stop; kwargs...) = logspace(start=start, stop=stop; kwargs...)
 
 # 1 positional argument
-logspace(start; stop=nothing, length=nothing, step=nothing, base=nothing, 
-    adjust_step=nothing) = _logspace(start, stop, length, step, base, adjust_step)
+logspace(start; kwargs...) = logspace(start=start; kwargs...)
 
 # 0 positional arguments
-logspace(; start=nothing, stop=nothing, length=nothing, step=nothing, base=nothing,
-    adjust_step=nothing) = _logspace(start, stop, length, step, base, adjust_step)
+function logspace(; start=nothing, stop=nothing, length=nothing, step=nothing, 
+    base=nothing, adjust_step=false)
 
-# _logspace dispatch to specific implementations
-
-# normal case
-_logspace(start, stop, length, step::Nothing, base::Nothing, adjust_step::Nothing) = logspace(start, stop, length)
-# start_stop_step with default for adjust_step
-_logspace(start, stop, length::Nothing, step, base, adjust_step::Nothing) = _logspace_start_stop_step(start, stop, step, base, false)
-_logspace(start, stop, length::Nothing, step, base, adjust_step) = _logspace_start_stop_step(start, stop, step, base, adjust_step)
-# start_len_step
-_logspace(start, stop::Nothing, length, step, base, adjust_step::Nothing) = _logspace_start_len_step(start, length, step, base)
-# stop_len_step
-_logspace(start::Nothing, stop, length, step, base, adjust_step::Nothing) = _logspace_stop_len_step(stop, length, step, base)
-
-
-# Errors and Warnings
-_logspace(start, stop::Nothing, length::Nothing, step, base, adjust_step::Nothing) = throw(
-    ArgumentError("stop or length must be defined")
-)
-_logspace(start, stop::Nothing, length::Nothing, step, base, adjust_step) = throw(
-    ArgumentError("stop or length must be defined")
-)
-_logspace(start, stop::Nothing, length::Nothing, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
-    ArgumentError("provide more arguments than just start")
-)
-_logspace(start::Nothing, stop, length::Nothing, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
-    ArgumentError("provide more arguments than just stop")
-)
-_logspace(start::Nothing, stop::Nothing, length, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
-    ArgumentError("provide more arguments than just length")
-)
-_logspace(start::Nothing, stop::Nothing, length::Nothing, step, base::Nothing, adjust_step::Nothing) = throw(
-    ArgumentError("provide more arguments than just step")
-)
-_logspace(start::Nothing, stop::Nothing, length::Nothing, step::Nothing, base, adjust_step::Nothing) = throw(
-    ArgumentError("provide more arguments than just step")
-)
-_logspace(start::Nothing, stop::Nothing, length::Nothing, step, base, adjust_step::Nothing) = throw(
-    ArgumentError("provide more arguments than just step and base")
-)
-_logspace(start, stop::Nothing, length, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
-    ArgumentError("provide stop or step and base")
-)
-_logspace(start, stop, length::Nothing, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
-    ArgumentError("provide length or step and base")
-)
-_logspace(start::Nothing, stop::Nothing, length::Nothing, step, base, adjust_step) = throw(
-    ArgumentError("either start or stop must be provided")
-)
-_logspace(start::Nothing, stop::Nothing, length, step, base, adjust_step) = throw(
-    ArgumentError("either start or stop must be provided")
-)
-_logspace(start::Nothing, stop, length, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
-    ArgumentError("provide start or step and base")
-)
-_logspace(start::Nothing, stop::Nothing, length::Nothing, step::Nothing, base::Nothing, adjust_step::Nothing) = throw(
-    ArgumentError("all arguments are nothing")
-)
-_logspace(start::Nothing, stop, length, step, base, adjust_step) = begin
-    @warn "step, base and adjust_step are ignored when length is given"
-    _logspace_stop_len_step(stop, length, step, base)
-end
-_logspace(start, stop, length, step, base, adjust_step) = begin
-    @warn "step, base and adjust_step are ignored when length is given"
-    logspace(start, stop, length)
+    if start !== nothing
+        if stop !== nothing
+            if length !== nothing
+                if !(step|>isnothing && base|>isnothing)
+                    @warn "step and base are ignored when length is given"
+                end
+                logspace(start, stop, length)
+            else # length === nothing
+                if step|>isnothing || base|>isnothing
+                    throw(ArgumentError("provide step and base"))
+                end
+                _logspace_start_stop_step(start, stop, step, base, adjust_step)
+            end
+        else # stop === nothing
+            if length !== nothing
+                if step|>isnothing || base|>isnothing
+                    throw(ArgumentError("provide step and base"))
+                end
+                _logspace_start_len_step(start, length, step, base)
+            else # length === nothing
+                throw(ArgumentError("provide length or step and base"))
+            end
+        end
+    else # start === nothing
+        if stop|>isnothing || length|>isnothing || step|>isnothing || base|>isnothing
+            throw(ArgumentError("either provide start or all of stop, length, step and base"))
+        end
+        _logspace_stop_len_step(stop, length, step, base)
+    end
 end
 
 function _logspace_start_stop_step(start, stop, step, base, adjust_step)

@@ -70,15 +70,27 @@ using Aqua
         end
 
         @testset "logspace errors with inappropriate arguments" begin
-            # length is dominant
-            @test_logs (:warn, "step, base and adjust_step are ignored when length is given"
-                ) logspace(start=1, stop=2, step=1/2, base=2, length=3)
-            @test_logs (:warn, "step, base and adjust_step are ignored when length is given"
+            
+            @test_logs (:warn, "step and base are ignored when start, stop and length are given") (
+                # length is dominant over step/base
+                @test all(logspace(start=1, stop=2, step=1/100, base=2, length=3) .≈ [1, 2^.5, 2])
+            )
+            @test_logs (:warn, "step and base are ignored when start, stop and length are given"
                 ) logspace(start=1, stop=2, step=1/2, length=3)
-            @test_logs (:warn, "step, base and adjust_step are ignored when length is given"
+            @test_logs (:warn, "step and base are ignored when start, stop and length are given"
                 ) logspace(start=1, stop=2, base=2, length=3)
-            @test_logs (:warn, "step, base and adjust_step are ignored when length is given"
+            @test_logs (:warn, "adjust_step is ignored when length is given"
                 ) logspace(start=1, stop=2, length=3, adjust_step=true)
+            @test_logs (
+                :warn, "adjust_step is ignored when length is given") (
+                :warn, "step and base are ignored when start, stop and length are given"
+                ) logspace(start=1, stop=2, step=1/2, base=2, length=3, adjust_step=true)
+
+            @test_logs (:warn, "adjust_step is ignored when length is given"
+                ) logspace(start=1, length=3, step=1/2, base=2, adjust_step=true)
+            @test_logs (:warn, "adjust_step is ignored when length is given"
+                ) logspace(stop=2, length=3, step=1/2, base=2, adjust_step=true)
+
 
             @test_throws ArgumentError logspace(start=1, stop=2, step=1/2)
             @test_throws ArgumentError logspace(start=1, stop=2, base=2)
@@ -121,10 +133,12 @@ using Aqua
             logspace(stop=2, length=3, step=1/2, base=2, adjust_step=true)
 
             # TODO what if stop <= start?
-        end
 
-        @testset "No method method ambiguities" begin
-            @test detect_ambiguities(NonuniformSmoothing1D)|>isempty
+            
+            # TODO lay out how this should react
+            # define positional parameter again in kwargs 
+            @test_skip @test_throws Exception logspace(1, 2, length=3, start=.5)
+            
         end
 
         # TODO make these go away
