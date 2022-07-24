@@ -1,13 +1,13 @@
-using NonuniformSmoothing1D
+using NonlinearSequences
 using Documenter
 
-DocMeta.setdocmeta!(NonuniformSmoothing1D, :DocTestSetup, :(using NonuniformSmoothing1D); recursive=true)
+DocMeta.setdocmeta!(NonlinearSequences, :DocTestSetup, :(using NonlinearSequences); recursive=true)
 
 makedocs(;
-    modules=[NonuniformSmoothing1D],
+    modules=[NonlinearSequences],
     authors="Johannes Fried <jcmf.schule@gmail.com> and contributors",
-    repo="https://github.com/Firionus/NonuniformSmoothing1D.jl/blob/{commit}{path}#{line}",
-    sitename="NonuniformSmoothing1D.jl",
+    repo="https://github.com/Firionus/NonlinearSequences.jl/blob/{commit}{path}#{line}",
+    sitename="NonlinearSequences.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
         edit_link="main",

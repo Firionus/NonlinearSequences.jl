@@ -1,5 +1,3 @@
-# NonuniformSmoothing1D
+# NonlinearSequences.jl
 
-Smooth and resample 1D data with nonuniform resolutions like logarithmic or
-power series spacings. The original applications was logarithmic smoothing of
-FFT spectra. 
+Nonlinearly spaced values for Julia, like logspace or powspace. 

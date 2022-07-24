@@ -1,14 +1,14 @@
 ```@meta
-CurrentModule = NonuniformSmoothing1D
+CurrentModule = NonlinearSequences
 ```
 
-# NonuniformSmoothing1D
+# NonlinearSequences
 
-Documentation for [NonuniformSmoothing1D](https://github.com/Firionus/NonuniformSmoothing1D.jl).
+Documentation for [NonlinearSequences](https://github.com/Firionus/NonlinearSequences.jl).
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [NonuniformSmoothing1D]
+Modules = [NonlinearSequences]
 ```

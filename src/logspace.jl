@@ -1,9 +1,3 @@
-module NonuniformSmoothing1D
-
-using NonuniformResampling1D
-
-export logspace
-
 """
     logspace(start, stop, length)
     logspace(start, stop; length, step, base, adjust_step)
@@ -159,14 +153,4 @@ function _logspace_stop_len_step(stop, length, step, base)
     logstop = log(stop)
     logstep = log(base)*step
     exp.(range(stop=logstop, length=length, step=logstep))
-end
-
-function powspace()
-    TODO()
-end
-
-# TODO: re-export stuff from NonuniformSmoothing1D
-
-# TODO move logspace and powspace to their own files
-
 end

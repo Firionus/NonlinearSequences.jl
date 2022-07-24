@@ -1,8 +1,8 @@
-using NonuniformSmoothing1D
+using NonlinearSequences
 using Test
 using Aqua
 
-@testset "NonuniformSmoothing1D.jl" begin
+@testset "NonlinearSequences.jl" begin
     # Write your tests here.
 
     @testset "API Ideas" begin
@@ -191,7 +191,7 @@ using Aqua
     end
 
     @testset "Aqua.jl" begin
-        Aqua.test_all(NonuniformSmoothing1D)
+        Aqua.test_all(NonlinearSequences)
     end
 
     @testset "Performance Examples" begin
