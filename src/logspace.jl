@@ -106,12 +106,12 @@ function logspace(; start=nothing, stop=nothing, length=nothing, step=nothing,
                 warn_adjust_step(adjust_step)
                 _logspace_start_len_step(start, length, step, base)
             else # length === nothing
-                throw(ArgumentError("provide length or step and base"))
+                throw(ArgumentError("provide length or stop"))
             end
         end
     else # start === nothing
         if stop|>isnothing || length|>isnothing || step|>isnothing || base|>isnothing
-            throw(ArgumentError("either provide start or all of stop, length, step and base"))
+            throw(ArgumentError("either provide start or all of stop, length and step"))
         end
         warn_adjust_step(adjust_step)
         _logspace_stop_len_step(stop, length, step, base)
@@ -122,8 +122,9 @@ warn_adjust_step(adjust_step) = if adjust_step !== nothing
     @warn "adjust_step is ignored when length is given"
 end
 
-ensure_step_base(step, base) = if step|>isnothing || base|>isnothing
-    throw(ArgumentError("provide step and base"))
+function ensure_step_base(step, base) 
+    step|>isnothing && throw(ArgumentError("provide step"))
+    base|>isnothing && throw(ArgumentError("provide base for step"))
 end
 
 function _logspace_start_stop_step(start, stop, step, base, adjust_step)
