@@ -26,6 +26,12 @@ end
     # octspace(; stop, length, step)
     @test octspace(stop=20e3, length=300, step=1/24) == 
         logspace(stop=20e3, length=300, step=1/24, base=2)
+    # octspace(start, stop; length) # no useless warnings
+    @test_logs @test octspace(20, 20e3, length=200) == logspace(20, 20e3, 200)
+    # octspace(start; stop, length) # no useless warnings
+    @test_logs @test octspace(20, stop=20e3, length=200) == logspace(20, 20e3, 200)
+    # octspace(;start, stop, length) # no useless warnings
+    @test_logs @test octspace(start=20, stop=20e3, length=200) == logspace(20, 20e3, 200)
 end
 
 @testset "octspace Errors" begin
