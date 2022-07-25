@@ -27,6 +27,12 @@ git-tree-sha1 = "2498c3704e9cd26bf586a351473417881676bb2d"
 uuid = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 version = "0.27.21"
 
+[[deps.DocumenterMarkdown]]
+deps = ["Documenter"]
+git-tree-sha1 = "9af057a98652336e30586d8092fac06f8b28ecdc"
+uuid = "997ab1e6-3595-5248-9280-8efb232c3433"
+version = "0.2.2"
+
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
 git-tree-sha1 = "f7be53659ab06ddc986428d3a9dcc95f6fa6705a"
