@@ -17,10 +17,10 @@ applications.
 
 ## Function Overview
 
-- [`logspace`](@ref): logarithmically spaced values
-- [`octspace`](@ref): logarithmically spaced values with step in octaves
-- [`decspace`](@ref): logarithmically spaced values with step in decades
-- [`powspace`](@ref): values spaced by power function
+- [`logspace`](#NonlinearSequences.logspace): logarithmically spaced values
+- [`octspace`](#NonlinearSequences.octspace): logarithmically spaced values with step in octaves
+- [`decspace`](#NonlinearSequences.decspace): logarithmically spaced values with step in decades
+- [`powspace`](#NonlinearSequences.powspace): values spaced by power function
 
 ## API Reference
 

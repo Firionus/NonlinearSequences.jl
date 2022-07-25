@@ -34,10 +34,10 @@ This package is quite new. It is recommended to only use it for non-critical app
 ## Function Overview
 
 
-  * [`logspace`](README.md#NonlinearSequences.logspace): logarithmically spaced values
-  * [`octspace`](README.md#NonlinearSequences.octspace): logarithmically spaced values with step in octaves
-  * [`decspace`](README.md#NonlinearSequences.decspace): logarithmically spaced values with step in decades
-  * [`powspace`](README.md#NonlinearSequences.powspace): values spaced by power function
+  * [`logspace`](#NonlinearSequences.logspace): logarithmically spaced values
+  * [`octspace`](#NonlinearSequences.octspace): logarithmically spaced values with step in octaves
+  * [`decspace`](#NonlinearSequences.decspace): logarithmically spaced values with step in decades
+  * [`powspace`](#NonlinearSequences.powspace): values spaced by power function
 
 
 <a id='API-Reference'></a>
@@ -116,7 +116,7 @@ julia> logspace(stop=1, step=-1/2, base=2, length=3)
 ```
 
 
-<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/0deba3a7f956341307161fbbcc8981bdaec5b95d/src/logspace.jl#L1-L67' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/634dd28a6de55dfbacaa64948c2b5523af8f639e/src/logspace.jl#L1-L67' class='documenter-source'>source</a><br>
 
 <a id='NonlinearSequences.octspace' href='#NonlinearSequences.octspace'>#</a>
 **`NonlinearSequences.octspace`** &mdash; *Function*.
@@ -188,7 +188,7 @@ julia> octspace(40, 20, -1/3)
 ```
 
 
-<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/0deba3a7f956341307161fbbcc8981bdaec5b95d/src/octspace.jl#L1-L68' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/634dd28a6de55dfbacaa64948c2b5523af8f639e/src/octspace.jl#L1-L68' class='documenter-source'>source</a><br>
 
 <a id='NonlinearSequences.decspace' href='#NonlinearSequences.decspace'>#</a>
 **`NonlinearSequences.decspace`** &mdash; *Function*.
@@ -253,7 +253,7 @@ julia> decspace(10, 1, -1/3)
 ```
 
 
-<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/0deba3a7f956341307161fbbcc8981bdaec5b95d/src/decspace.jl#L1-L61' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/634dd28a6de55dfbacaa64948c2b5523af8f639e/src/decspace.jl#L1-L61' class='documenter-source'>source</a><br>
 
 <a id='NonlinearSequences.powspace' href='#NonlinearSequences.powspace'>#</a>
 **`NonlinearSequences.powspace`** &mdash; *Function*.
@@ -292,7 +292,7 @@ julia> powspace(0, 1, 1/2, 3)
 ```
 
 
-<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/0deba3a7f956341307161fbbcc8981bdaec5b95d/src/powspace.jl#L1-L29' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/634dd28a6de55dfbacaa64948c2b5523af8f639e/src/powspace.jl#L1-L29' class='documenter-source'>source</a><br>
 
 
 <a id='Development'></a>
