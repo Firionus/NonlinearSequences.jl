@@ -5,6 +5,6 @@ include("octspace.jl")
 include("decspace.jl")
 include("powspace.jl")
 
-export logspace, octspace, decspace
+export logspace, octspace, decspace, powspace
 
 end
