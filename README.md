@@ -27,6 +27,25 @@ The package is currently not registered, so you'll have to install it from GitHu
 This package is quite new. It is recommended to only use it for non-critical applications. 
 
 
+<a id='Getting-Started'></a>
+
+<a id='Getting-Started-1'></a>
+
+## Getting Started
+
+
+```julia-repl
+julia> using NonlinearSequences
+
+julia> logspace(20, 40, length=4)
+4-element Vector{Float64}:
+ 19.999999999999996
+ 25.198420997897465
+ 31.748021039363984
+ 40.0
+```
+
+
 <a id='Function-Overview'></a>
 
 <a id='Function-Overview-1'></a>
@@ -116,7 +135,7 @@ julia> logspace(stop=1, step=-1/2, base=2, length=3)
 ```
 
 
-<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/634dd28a6de55dfbacaa64948c2b5523af8f639e/src/logspace.jl#L1-L67' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/e775f6fdec0be12404a6890d388066be2f9466ee/src/logspace.jl#L1-L67' class='documenter-source'>source</a><br>
 
 <a id='NonlinearSequences.octspace' href='#NonlinearSequences.octspace'>#</a>
 **`NonlinearSequences.octspace`** &mdash; *Function*.
@@ -188,7 +207,7 @@ julia> octspace(40, 20, -1/3)
 ```
 
 
-<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/634dd28a6de55dfbacaa64948c2b5523af8f639e/src/octspace.jl#L1-L68' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/e775f6fdec0be12404a6890d388066be2f9466ee/src/octspace.jl#L1-L68' class='documenter-source'>source</a><br>
 
 <a id='NonlinearSequences.decspace' href='#NonlinearSequences.decspace'>#</a>
 **`NonlinearSequences.decspace`** &mdash; *Function*.
@@ -253,7 +272,7 @@ julia> decspace(10, 1, -1/3)
 ```
 
 
-<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/634dd28a6de55dfbacaa64948c2b5523af8f639e/src/decspace.jl#L1-L61' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/e775f6fdec0be12404a6890d388066be2f9466ee/src/decspace.jl#L1-L61' class='documenter-source'>source</a><br>
 
 <a id='NonlinearSequences.powspace' href='#NonlinearSequences.powspace'>#</a>
 **`NonlinearSequences.powspace`** &mdash; *Function*.
@@ -292,7 +311,7 @@ julia> powspace(0, 1, 1/2, 3)
 ```
 
 
-<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/634dd28a6de55dfbacaa64948c2b5523af8f639e/src/powspace.jl#L1-L29' class='documenter-source'>source</a><br>
+<a target='_blank' href='https://github.com/Firionus/NonlinearSequences.jl/blob/e775f6fdec0be12404a6890d388066be2f9466ee/src/powspace.jl#L1-L29' class='documenter-source'>source</a><br>
 
 
 <a id='Development'></a>

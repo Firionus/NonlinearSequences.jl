@@ -15,6 +15,19 @@ GitHub. Open a Julia REPL and run:
 This package is quite new. It is recommended to only use it for non-critical
 applications. 
 
+## Getting Started
+
+```jldoctest
+julia> using NonlinearSequences
+
+julia> logspace(20, 40, length=4)
+4-element Vector{Float64}:
+ 19.999999999999996
+ 25.198420997897465
+ 31.748021039363984
+ 40.0
+```
+
 ## Function Overview
 
 - [`logspace`](#NonlinearSequences.logspace): logarithmically spaced values
