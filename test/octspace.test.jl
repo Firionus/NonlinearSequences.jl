@@ -69,4 +69,6 @@ end
         @test octspace(20, length=300, step=1/24, adjust_step=true) == 
         logspace(20, length=300, step=1/24, base=2)
     )
+
+    @test_logs (:warn,) octspace(20, 20e3, length=4, adjust_step=true)
 end

@@ -26,4 +26,14 @@ end
     # decspace(; stop, length, step)
     @test decspace(stop=20e3, length=300, step=1/24) == 
         logspace(stop=20e3, length=300, step=1/24, base=10)
+    # decspace(start, stop; length) # no useless warnings
+    @test_logs @test decspace(20, 20e3, length=200) == logspace(20, 20e3, 200)
+    # decspace(start; stop, length) # no useless warnings
+    @test_logs @test decspace(20, stop=20e3, length=200) == logspace(20, 20e3, 200)
+    # decspace(;start, stop, length) # no useless warnings
+    @test_logs @test decspace(start=20, stop=20e3, length=200) == logspace(20, 20e3, 200)
+end
+
+@testset "decspace Errors" begin
+    @test_logs (:warn,) decspace(20, 20e3, length=4, adjust_step=true)
 end

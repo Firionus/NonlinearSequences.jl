@@ -64,6 +64,7 @@ julia> octspace(40, 20, -1/3)
  31.748021039363984
  25.198420997897465
  19.999999999999996
+```
 """
 function octspace end
 
@@ -84,7 +85,7 @@ octspace(start; stop=nothing, step=nothing, length=nothing, adjust_step=nothing)
 # 0 positional arguments
 function octspace(; start=nothing, stop=nothing, step=nothing, length=nothing, adjust_step=nothing)
     if step|>isnothing
-        logspace(start=start, stop=stop, length=length)
+        logspace(start=start, stop=stop, length=length, adjust_step=adjust_step)
     else
         logspace(start=start, stop=stop, step=step, base=2, length=length, adjust_step=adjust_step)
     end
